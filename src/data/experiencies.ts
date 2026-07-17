@@ -2,44 +2,53 @@ import type { Experiencie } from "../../types/type-experiencies";
 
 const categories: Experiencie["category"][] = [
   "Adventure",
-  "Cultural",
-  "Relaxation",
-  "Wildlife",
-  "Food & Drink",
+  "Culture",
+  "Wellness",
+  "Food",
+  "Nature",
 ];
 
-const destinations: Experiencie["destination"][] = [
-  "Buenos Aires",
-  "Brasilia",
-  "Montevideo",
-  "Asunción",
-  "Santiago",
-  "La Paz",
-  "Lima",
-  "Quito",
-  "Bogotá",
-  "Caracas",
-  "Panama City",
-  "San José",
-  "Havana",
-  "Kingston",
-  "Port-au-Prince",
-];
+const destinations = [
+  { city: "Buenos Aires", country: "Argentina" },
+  { city: "Santiago", country: "Chile" },
+  { city: "Lima", country: "Peru" },
+  { city: "Bogota", country: "Colombia" },
+  { city: "Quito", country: "Ecuador" },
+  { city: "Montevideo", country: "Uruguay" },
+  { city: "Asuncion", country: "Paraguay" },
+  { city: "La Paz", country: "Bolivia" },
+  { city: "Mexico City", country: "Mexico" },
+  { city: "San Jose", country: "Costa Rica" },
+  { city: "Panama City", country: "Panama" },
+  { city: "Havana", country: "Cuba" },
+  { city: "Madrid", country: "Spain" },
+  { city: "Lisbon", country: "Portugal" },
+  { city: "Rome", country: "Italy" },
+  { city: "Athens", country: "Greece" },
+  { city: "Istanbul", country: "Turkey" },
+  { city: "Marrakech", country: "Morocco" },
+  { city: "Bangkok", country: "Thailand" },
+  { city: "Kyoto", country: "Japan" },
+] as const;
 
 export const experiencies: Experiencie[] = Array.from({ length: 100 }, (_, index) => {
   const id = index + 1;
   const category = categories[index % categories.length];
   const destination = destinations[index % destinations.length];
-  const month = String((index % 12) + 1).padStart(2, "0");
-  const day = String((index % 28) + 1).padStart(2, "0");
+  const price = 50 + (index % 25) * 8;
+  const rating = Number((3.5 + (index % 16) * 0.1).toFixed(1));
 
   return {
     id,
-    title: `Experience ${id}: ${category} in ${destination}`,
+    title: `Experience ${id}: ${category} in ${destination.city}`,
     category,
-    destination,
-    description: `A curated ${category.toLowerCase()} travel activity in ${destination}, recommended by travelers.`,
-    image: `/images/experiences/${id}.jpg`,
-    date: new Date(`2026-${month}-${day}T10:00:00Z`),
+    destination: {
+      city: destination.city,
+      country: destination.country,
+    },
+    price,
+    rating,
+    description: `Discover a ${category.toLowerCase()} experience in ${destination.city}, ${destination.country}, shared by real travelers.`,
+    imageUrl: `/images/experiences/experience-${id}.jpg`,
   };
 });
